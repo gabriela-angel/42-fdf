@@ -1,29 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw.c                                             :+:      :+:    :+:   */
+/*   ft_malloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/27 20:12:00 by gangel-a          #+#    #+#             */
-/*   Updated: 2025/02/28 15:11:42 by gangel-a         ###   ########.fr       */
+/*   Created: 2025/02/28 18:26:01 by gangel-a          #+#    #+#             */
+/*   Updated: 2025/02/28 19:02:48 by gangel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	draw_background(mlx_image_t *img, int width, int height)
+static t_malloc	*get_malloc_item(void)
 {
-	int	x;
-	int	y;
+	static t_malloc	mlc;
 
-	x = 0;
-	y = 0;
-	while (y < height)
+	return (&mlc);
+}
+
+void	*ft_malloc(size_t size)
+{
+	t_malloc	*mlc;
+	void		*ptr;
+
+	mlc = get_malloc_item();
+	ptr = ft_calloc(1, size);
+	if (!ptr)
+		return (NULL);
+	mlc->list[mlc->i] = ptr;
+	mlc->i++;
+	return (ptr);
+}
+
+void	ft_free_all(void)
+{
+	t_malloc	*mlc;
+
+	mlc = get_malloc_item();
+	while (mlc->i > 0)
 	{
-		x = -1;
-		while (++x < width)
-			mlx_put_pixel(img, x, y, BLACK);
-		y++;
+		mlc->i--;
+		free(mlc->list[mlc->i]);
+		mlc->list[mlc->i] = NULL;
 	}
 }

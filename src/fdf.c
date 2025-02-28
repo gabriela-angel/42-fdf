@@ -6,47 +6,39 @@
 /*   By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:35:46 by gangel-a          #+#    #+#             */
-/*   Updated: 2025/02/27 20:40:16 by gangel-a         ###   ########.fr       */
+/*   Updated: 2025/02/28 18:55:40 by gangel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+#include <stdio.h>
 
-void	close_window(void *param)
+void	handle_key(mlx_key_data_t keydata, void *param)
 {
-	mlx_t	*mlx;
+	t_fdf	*fdf;
 
-	mlx = (mlx_t *)param;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
+	fdf = (t_fdf *)param;
+	printf("Key %d pressed with action %d\n", keydata.os_key, keydata.action);
+	if (keydata.os_key == 9 && keydata.action == MLX_PRESS)
+		mlx_close_window(fdf->mlx);
 }
 
 int	main(int argc, char **argv)
 {
-	mlx_t		*mlx_pointer;
-	mlx_image_t	*img;
+	t_fdf	*fdf;
 
 	(void) argc;
 	(void) argv;
 
-	//if (argc != 2)
-	//{
-	//	ft_printf("Error: Wrong format.\n");
-	//	ft_printf("Program executed as: ./fdf <map_path>\n");
-	//	return (1);
-	//}
+	if (argc != 2)
+		handle_error (WRONG_USAGE);
+	fdf = init_fdf();
+	if (!fdf)
+		handle_error(FDF_ERROR);
 
-	mlx_pointer = mlx_init(514, 514, "test fdf", true);
-	//if (!mlx_pointer)
-	//{
-	//	free stuff
-	//}
-	img = mlx_new_image(mlx_pointer, 514, 514);
-	//if (!img)
-	//{
-	//	free stuff
-	//}
-	draw_background(img, 514, 514);
-	mlx_loop_hook(mlx_pointer, close_window, mlx_pointer);
-	mlx_loop(mlx_pointer);
+	draw_background(fdf->img, 514, 514);
+	mlx_key_hook(fdf->mlx, handle_key, fdf);
+	mlx_loop(fdf->mlx);
+	mlx_terminate(fdf->mlx);
+	free(fdf);
 }
