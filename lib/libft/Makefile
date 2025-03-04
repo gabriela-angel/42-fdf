@@ -6,7 +6,7 @@
 #    By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 12:04:18 by gangel-a          #+#    #+#              #
-#    Updated: 2025/02/18 16:16:55 by gangel-a         ###   ########.fr        #
+#    Updated: 2025/02/28 19:19:53 by gangel-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,7 +67,7 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC:%.c=%.o))
 BONUS_OBJ = $(addprefix $(OBJ_DIR), $(BONUS_SRC:%.c=%.o))
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -I
+CFLAGS = -Wall -Werror -Wextra -fPIC -I
 HEADER = include
 
 # ------------------------------ GNL ------------------------------

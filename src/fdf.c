@@ -6,7 +6,7 @@
 /*   By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 17:35:46 by gangel-a          #+#    #+#             */
-/*   Updated: 2025/02/28 18:55:40 by gangel-a         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:31:37 by gangel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,13 @@ int	main(int argc, char **argv)
 	(void) argc;
 	(void) argv;
 
-	if (argc != 2)
-		handle_error (WRONG_USAGE);
+	//if (argc != 2)
+	//	handle_error (WRONG_USAGE);
 	fdf = init_fdf();
-	if (!fdf)
-		handle_error(FDF_ERROR);
 
 	draw_background(fdf->img, 514, 514);
 	mlx_key_hook(fdf->mlx, handle_key, fdf);
 	mlx_loop(fdf->mlx);
 	mlx_terminate(fdf->mlx);
-	free(fdf);
+	ft_free_all();
 }

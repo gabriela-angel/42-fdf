@@ -6,7 +6,7 @@
 /*   By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:50:21 by gangel-a          #+#    #+#             */
-/*   Updated: 2025/02/28 18:59:53 by gangel-a         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:26:48 by gangel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void	handle_error(char *error_msg)
 {
 	ft_free_all();
-	ft_printf("%s", error_msg);
+	ft_printf("%s\n", error_msg);
 	exit(1);
 }
