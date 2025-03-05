@@ -6,7 +6,7 @@
 /*   By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 15:12:06 by gangel-a          #+#    #+#             */
-/*   Updated: 2025/02/28 20:28:29 by gangel-a         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:07:53 by gangel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 static t_fdf	*get_fdf(void)
 {
-	static int	fdf;
+	static t_fdf	fdf;
 
 	return (&fdf);
 }
 
 t_fdf	*init_fdf(void)
 {
-	t_fdf	fdf;
-
-	fdf.img
+	t_fdf	*fdf;
 
 	fdf = get_fdf();
 	fdf->mlx = mlx_init(514, 514, "FdF", true);

@@ -6,7 +6,7 @@
 /*   By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 17:30:39 by gangel-a          #+#    #+#             */
-/*   Updated: 2025/02/28 19:25:48 by gangel-a         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:00:01 by gangel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,32 @@
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 # include "../lib/libft/include/libft.h"
 
-// ERROR MACROS -----------
+// MACROS -----------
 # define WRONG_USAGE "Error: Wrong format. Try: ./fdf <map>"
 # define FDF_ERROR "Error: Not able to initialize fdf."
 # define IMG_ERROR "Error: Failed to create image."
 
 // STRUCTS ----------------
+typedef struct s_point
+{
+	int			x;
+	int			y;
+	int			z;
+	uint32_t	color;
+}	t_point;
+
+typedef struct s_map
+{
+	int		height;
+	int		width;
+	t_point	**map;
+}	t_map;
+
 typedef struct s_malloc
 {
 	void	*list[1000];
 	size_t	i;
 }	t_malloc;
-
 
 typedef struct s_fdf
 {

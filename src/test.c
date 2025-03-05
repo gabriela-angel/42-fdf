@@ -1,10 +1,8 @@
 #include "fdf.h"
-# include <stdio.h>
-# include <stdlib.h>
-# include <stdbool.h>
+#include <stdio.h>
 
-#define WIDTH 512
-#define HEIGHT 512
+#define WIDTH 256
+#define HEIGHT 256
 
 static mlx_image_t* image;
 
@@ -58,6 +56,7 @@ int32_t main(void)
 	// Gotta error check this stuff
 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
 	{
+		printf("Error initializing MLX42: %s\n", mlx_strerror(mlx_errno));
 		puts(mlx_strerror(mlx_errno));
 		return(EXIT_FAILURE);
 	}
@@ -73,7 +72,7 @@ int32_t main(void)
 		puts(mlx_strerror(mlx_errno));
 		return(EXIT_FAILURE);
 	}
-
+	
 	mlx_loop_hook(mlx, ft_randomize, mlx);
 	mlx_loop_hook(mlx, ft_hook, mlx);
 
