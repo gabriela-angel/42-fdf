@@ -23,7 +23,7 @@ static t_point	*get_points(char **items, int width, int y)
 	{
 		line[i].x = i;
 		line[i].y = y;
-		line[i]. z = ft_atoi(items[i]);
+		line[i].z = ft_atoi(items[i]);
 		line[i].color = get_color(items[i]);
 		i++;
 	}
@@ -44,7 +44,13 @@ static void	populate_map(t_map *map, char *str)
 	{
 		temp = ft_split(matrix[y], ' ');
 		if (y == 0)
-		map->width = matrix_item_n(temp);
+			map->width = matrix_item_n(temp);
+		else if (map->width != matrix_item_n(temp))
+		{
+			ft_free_matrix(temp);
+			ft_free_matrix(matrix);
+			handle_error(INVALID_MAP);
+		}
 		map->points[y] = get_points(temp, map->width, y);
 		ft_free_matrix(temp);
 		y++;

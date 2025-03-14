@@ -6,7 +6,7 @@
 /*   By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 17:30:39 by gangel-a          #+#    #+#             */
-/*   Updated: 2025/03/13 20:14:22 by gangel-a         ###   ########.fr       */
+/*   Updated: 2025/03/13 23:10:08 by gangel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # include "../lib/MLX42/include/MLX42/MLX42.h"
 # include "../lib/libft/include/libft.h"
 
-// MACROS -----------
+// ERROR MACROS -----------
 # define WRONG_USAGE "Error: Wrong format. Try: ./fdf <map>"
+# define INVALID_MAP "Error: Invalid map."
 # define FDF_ERROR "Error: Not able to initialize fdf."
 # define IMG_ERROR "Error: Failed to create image."
 
