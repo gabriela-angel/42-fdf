@@ -1,18 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   home.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 18:58:58 by gangel-a          #+#    #+#             */
-/*   Updated: 2025/03/04 18:58:58 by gangel-a         ###   ########.fr       */
+/*   Created: 2025/03/13 21:41:14 by gangel-a          #+#    #+#             */
+/*   Updated: 2025/03/13 21:41:14 by gangel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#import "fdf.h"
+#include "fdf.h"
 
-void    read_map(char *map_path)
+static t_point	*get_points(char **items, int width, int y)
+{
+	t_point	*line;
+	int i;
+
+	line = (t_point *)ft_malloc(width * sizeof(t_point));
+	i = 0;
+	while (i < width)
+	{
+		line[i].x = i;
+		line[i].y = y;
+		line[i]. z = ft_atoi(items[i]);
+		line[i].color = get_color(items[i]);
+		i++;
+	}
+	return (line);
+}
+
+static void	populate_map(t_map *map, char *str)
+{
+	char	**matrix;
+	char	**temp;
+	int		y;
+	
+	matrix = ft_split(str, '\n');
+	free(str);
+	map->points = (t_point **)ft_malloc(height * sizeof(t_point *));
+	y = 0;
+	while(y < map->height)
+	{
+		temp = ft_split(matrix[y], ' ');
+		if (y == 0)
+		map->width = matrix_item_n(temp);
+		map->points[y] = get_points(temp, map->width, y);
+		ft_free_matrix(temp);
+		y++;
+	}
+	ft_free_matrix(matrix);
+	return ;
+}
+
+void	get_map(t_fdf *fdf, char *map_path)
 {
 	int		fd;
 	int		height;
@@ -21,67 +62,20 @@ void    read_map(char *map_path)
 
 	fd = open(map_path, O_RDONLY);
 	map = ft_strdup("");
-	height = 0;
+	fdf->map.height = = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line && *line)
 			break;
-		map = ft_strjoin(map, line);
+		map = ft_strjoin(map, line);	
 		free(line);
-		height++;
-	}
-	populate_map(map, height);
+		fdf->map.height++;
+	}	
+	populate_map(&(fdf->map), str);
 	close(fd);
 	return (0);
-}
+}	
 
-char	**get_line(char *arr)
-{
-	char	*temp;
-	char	**line;
-
-	temp = ft_strtrim(arr, "/n");
-	line = ft_split(temp, ' ');
-	free(temp);
-	return (line);
-}
-
-int	array_item_n(char **arr)
-{
-	int		item_n;
-
-	item_n = 0;
-	while (arr[item_n])
-		item_n++;
-	return (item_n);
-}
-
-void	populate_map(char *str, int height)
-{
-	t_fdf	*fdf;
-	char	**matrix;
-	int		y;
-	
-	fdf = get_fdf();
-	fdf->map.height = height;
-	matrix = ft_split(str, '\n');
-	free(str);
-	fdf->map.map = (t_point **)ft_malloc(height * sizeof(t_point *));
-	y = 0;
-	while(y < height)
-	{
-		temp = get_line(matrix[y]);
-		if (y == 0)
-			fdf->map.width = array_item_n(temp);
-		//
-		fdf->map.map[y] = get_point(temp, y);
-		ft_free_matrix(temp);
-		y++;
-	}
-	ft_free_matrix(matrix);
-	return ;
-}
-
-matrix = ["2 3 0 0 0\n", "0 0 0 0 1\n", "3 0 2 5 0\n"]
+matrix = ["2 3 0 0 0", "0 0 0 0 1", "3 0 2 5 0"]
 temp = ft_split(matrix[y], ' '); = ["2", "3", "0", "0", "0"]

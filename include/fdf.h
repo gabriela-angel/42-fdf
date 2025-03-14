@@ -6,7 +6,7 @@
 /*   By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 17:30:39 by gangel-a          #+#    #+#             */
-/*   Updated: 2025/03/04 19:00:01 by gangel-a         ###   ########.fr       */
+/*   Updated: 2025/03/13 20:14:22 by gangel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_map
 {
 	int		height;
 	int		width;
-	t_point	**map;
+	t_point	**points;
 }	t_map;
 
 typedef struct s_malloc
@@ -48,6 +48,7 @@ typedef struct s_fdf
 {
 	mlx_t		*mlx;
 	mlx_image_t	*img;
+	t_map		map;
 }	t_fdf;
 
 // COLORS ------------------
