@@ -12,35 +12,6 @@
 
 #include "fdf.h"
 
-static unsigned int	ft_htoi(char *hex)
-{
-	unsigned int	final_int;
-	int	num;
-	int	i;
-
-	i = -1;
-	final_int = 0;
-	if (hex[0] == '#') {
-		hex++;
-	} else if (hex[0] == '0' && (hex[1] == 'x' || hex[1] == 'X')) {
-		hex += 2;
-	}
-	while (hex[++i] && hex[i] != ' ' && hex[i] != '\n')
-	{
-		num = hex[i];
-		if (num >= '0' && num <= '9')
-			num = num - '0';
-		else if (num >= 'a' && num <= 'f')
-			num = num - 'a' + 10;
-		else if (num >= 'A' && num <= 'F')
-			num = num - 'A' + 10;
-		else
-			handle_error(INVALID_COLOR);
-		final_int = (final_int * 16) + num;
-	}
-	return (final_int);
-}
-
 static uint32_t	put_alpha(uint32_t color)
 {
 	uint32_t		rgba;
@@ -55,12 +26,67 @@ static uint32_t	put_alpha(uint32_t color)
 uint32_t	get_color(char *str)
 {
 	char	*hex;
-
+	int		color;
+	
 	hex = ft_strchr(str, ',');
-	if(hex)
+	if (hex)
 	{
 		hex++;
-		return (put_alpha(ft_htoi(hex)));
+		color = ft_htoi(hex);
+		if (color < 0)
+			handle_error(INVALID_COLOR);
+		return (put_alpha(color));
 	}
 	return (0);
+}
+
+uint32_t	choose_color(int max_z, int min_z, int current_z)
+{
+	if (current_z == 0)
+		return (WHITE);
+	if (max_z > 0)
+	{
+		if (current_z == max_z / 2)
+			return (PINK);
+		if (current_z == max_z)
+			return (BLUE);
+		if (current_z > 0 && current_z < max_z / 2)
+			return (gradient(PINK, WHITE, max_z / 2, max_z / 2 - current_z));
+		if (current_z > max_z / 2 && current_z < max_z)
+			return (gradient(BLUE, PINK, max_z / 2, max_z - current_z));
+	}
+	if (min_z < 0)
+	{
+		if (current_z == min_z)
+			return (PURPLE);
+		if (current_z == min_z / 2)
+			return (ORANGE);
+		if (current_z > min_z && current_z < min_z / 2)
+			return (gradient(PURPLE, ORANGE, -min_z / 2, current_z - min_z));
+		if (current_z > min_z / 2 && current_z < 0)
+			return (gradient(ORANGE, WHITE, -min_z / 2, current_z - min_z / 2));
+	}
+	return (0);
+}
+
+uint32_t	gradient(int start_color, int end_color, int grad_len, int position)
+{
+	double	increment[4];
+	int		new[4];
+	int		new_color;
+
+	increment[0] = (double)(get_red(end_color) - get_red(start_color))
+		/ (double)grad_len;
+	increment[1] = (double)(get_green(end_color) - get_green(start_color))
+		/ (double)grad_len;
+	increment[2] = (double)(get_blue(end_color) - get_blue(start_color))
+		/ (double)grad_len;
+	increment[3] = (double)(get_alpha(end_color) - get_alpha(start_color))
+		/ (double)grad_len;
+	new[0] = get_red(start_color) + round(increment[0] * position);
+	new[1] = get_green(start_color) + round(increment[1] * position);
+	new[2] = get_blue(start_color) + round(increment[2] * position);
+	new[3] = get_alpha(start_color) + round(increment[3] * position);
+	new_color = get_rgba(new[0], new[1], new[2], new[3]);
+	return (new_color);
 }

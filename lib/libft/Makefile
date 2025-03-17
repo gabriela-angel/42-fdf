@@ -6,7 +6,7 @@
 #    By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 12:04:18 by gangel-a          #+#    #+#              #
-#    Updated: 2025/02/28 19:19:53 by gangel-a         ###   ########.fr        #
+#    Updated: 2025/03/16 22:16:46 by gangel-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC = ft_atoi.c \
 		ft_bzero.c \
 		ft_calloc.c \
 		ft_free_matrix.c \
+		ft_htoi.c \
 		ft_itoa.c \
 		ft_isalpha.c \
 		ft_isdigit.c \
@@ -102,6 +103,13 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 $(OBJ_DIR):
 	@mkdir $@
 	@echo "object directory created"
+
+$(GNL_OBJ_DIR):
+	@mkdir -p $@
+	@echo "GNL object directory created"
+
+$(GNL_OBJ_DIR)%.o: $(GNL_DIR)%.c
+	@$(CC) $(CFLAGS)$(GNL_HEADER) -c $< -o $@
 
 clean:
 	@rm -rf $(OBJ_DIR)

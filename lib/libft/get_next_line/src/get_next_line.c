@@ -6,7 +6,7 @@
 /*   By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/22 15:40:00 by gangel-a          #+#    #+#             */
-/*   Updated: 2025/02/18 15:40:53 by gangel-a         ###   ########.fr       */
+/*   Updated: 2025/03/15 21:44:22 by gangel-a         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,21 +95,21 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-//#include <fcntl.h>
-//#include <stdio.h>
+// #include <fcntl.h>
+// #include <stdio.h>
 
-//int	main(void)
-//{
-//	int	fd = open("teste.txt", O_RDWR);
-//	char	*ptr = NULL;
+// int	main(void)
+// {
+// 	int	fd = open("10-2.fdf", O_RDWR);
+// 	char	*ptr = NULL;
 
-//	ptr = get_next_line(fd);
-//	while (ptr && *ptr)
-//	{
-//		printf("%s", ptr);
-//		free(ptr);
-//		ptr = get_next_line(fd);
-//	}
-//	close(fd);
-//	return (0);
-//}
+// 	ptr = get_next_line(fd);
+// 	while (ptr && *ptr)
+// 	{
+// 		printf("%s", ptr);
+// 		free(ptr);
+// 		ptr = get_next_line(fd);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }

@@ -12,18 +12,22 @@
 
 #include "fdf.h"
 
-static t_point	*get_points(char **items, int width, int y)
+static t_point	*get_points(char **items, t_map *map, int y)
 {
 	t_point	*line;
-	int i;
+	int		i;
 
-	line = (t_point *)ft_malloc(width * sizeof(t_point));
+	line = (t_point *)ft_malloc(map->width * sizeof(t_point));
 	i = 0;
-	while (i < width)
+	while (i < map->width)
 	{
 		line[i].x = i;
 		line[i].y = y;
 		line[i].z = ft_atoi(items[i]);
+		if (map->max_z < line[i].z)
+			map->max_z = line[i].z;
+		else if (map->min_z > line[i].z)
+			map->min_z = line[i].z;
 		line[i].color = get_color(items[i]);
 		i++;
 	}
@@ -35,12 +39,12 @@ static void	populate_map(t_map *map, char *str)
 	char	**matrix;
 	char	**temp;
 	int		y;
-	
+
 	matrix = ft_split(str, '\n');
 	free(str);
-	map->points = (t_point **)ft_malloc(height * sizeof(t_point *));
+	map->points = (t_point **)ft_malloc(map->height * sizeof(t_point *));
 	y = 0;
-	while(y < map->height)
+	while (y < map->height)
 	{
 		temp = ft_split(matrix[y], ' ');
 		if (y == 0)
@@ -51,7 +55,7 @@ static void	populate_map(t_map *map, char *str)
 			ft_free_matrix(matrix);
 			handle_error(INVALID_MAP);
 		}
-		map->points[y] = get_points(temp, map->width, y);
+		map->points[y] = get_points(temp, map, y);
 		ft_free_matrix(temp);
 		y++;
 	}
@@ -59,29 +63,27 @@ static void	populate_map(t_map *map, char *str)
 	return ;
 }
 
-void	get_map(t_fdf *fdf, char *map_path)
+void	init_map(t_fdf *fdf, char *map_path)
 {
 	int		fd;
-	int		height;
 	char	*line;
 	char	*map;
 
 	fd = open(map_path, O_RDONLY);
 	map = ft_strdup("");
-	fdf->map.height = = 0;
+	fdf->map.height = 0;
+	fdf->map.max_z = 0;
+	fdf->map.min_z = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
-		if (line && *line)
-			break;
-		map = ft_strjoin(map, line);	
+		if (!line || !*line)
+			break ;
+		map = ft_strjoin(map, line);
 		free(line);
 		fdf->map.height++;
-	}	
-	populate_map(&(fdf->map), str);
+	}
+	populate_map(&(fdf->map), map);
 	close(fd);
-	return (0);
-}	
-
-matrix = ["2 3 0 0 0", "0 0 0 0 1", "3 0 2 5 0"]
-temp = ft_split(matrix[y], ' '); = ["2", "3", "0", "0", "0"]
+	return ;
+}
