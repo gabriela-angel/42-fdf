@@ -6,7 +6,7 @@
 #    By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 12:04:18 by gangel-a          #+#    #+#              #
-#    Updated: 2025/03/16 22:16:46 by gangel-a         ###   ########.fr        #
+#    Updated: 2025/03/17 19:57:19 by gangel-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,26 +87,26 @@ all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
-	@echo "library created"
+	@printf "library created"
 
 bonus: $(OBJ_DIR) $(BONUS_OBJ)
 	@ar rcs $(NAME) $(BONUS_OBJ)
-	@echo "bonus created"
+	@printf "bonus created"
 
-gnl: $(GNL_OBJ_DIR) $(GNL_OBJ)
+gnl: $(GNL_OBJ_DIR) $(GNL_OBJ) | $(NAME)
 	@ar rcs $(NAME) $(GNL_OBJ)
-	@echo "gnl added"
+	@printf "gnl added"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS)$(HEADER) -c $< -o $@
 
 $(OBJ_DIR):
 	@mkdir $@
-	@echo "object directory created"
+	@printf "object directory created"
 
 $(GNL_OBJ_DIR):
 	@mkdir -p $@
-	@echo "GNL object directory created"
+	@printf "GNL object directory created"
 
 $(GNL_OBJ_DIR)%.o: $(GNL_DIR)%.c
 	@$(CC) $(CFLAGS)$(GNL_HEADER) -c $< -o $@

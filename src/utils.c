@@ -45,10 +45,18 @@ void	validate_map(char *map_path)
 		handle_error(INVALID_MAP);
 	fd = open(map_path, O_RDONLY);
 	if (fd < 0)
+	{
+		close(fd);
 		handle_error(INVALID_MAP);
+	}
 	line = get_next_line(fd);
-	if (!line || !*line)
+	if (!line || line[0] == '\0' || line[0] == '\n' || line[0] == '\r')
+	{
+		close(fd);
+		free(line);
+		get_next_line(-42);
 		handle_error(EMPTY_MAP);
+	}
 	free(line);
 	get_next_line(-42);
 	close(fd);
