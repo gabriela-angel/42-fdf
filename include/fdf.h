@@ -105,7 +105,8 @@ void		init_map(t_fdf *fdf, char *map_path);
 // COLORS ------------------
 uint32_t	get_color(char *str);
 uint32_t	choose_color(int max_z, int min_z, int current_z);
-uint32_t	gradient(int start_color, int end_color, int grad_len, int position);
+uint32_t	gradient(int start_color, int end_color,
+				int grad_len, int position);
 int			get_red(int color);
 int			get_green(int color);
 int			get_blue(int color);

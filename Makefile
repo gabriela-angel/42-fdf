@@ -80,7 +80,7 @@ $(NAME): $(OBJ)
 	@printf "$(GREEN_BOLD) => Success!$(RESET)\n"
 
 leak: $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes ./$(NAME) maps/test_maps/empty.fdf
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --suppressions=suppression_file.supp ./$(NAME) maps/test_maps/42.fdf
 
 clean:
 	@make -C $(LIBFT_DIR) clean --no-print-directory

@@ -27,7 +27,7 @@ uint32_t	get_color(char *str)
 {
 	char	*hex;
 	int		color;
-	
+
 	hex = ft_strchr(str, ',');
 	if (hex)
 	{
