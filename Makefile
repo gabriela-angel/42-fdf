@@ -55,16 +55,24 @@ RESET		= \033[0m
 
 # ------------------------------ Rules ------------------------------
 
-all: $(MLX) $(LIBFT) $(OBJ_DIR) $(NAME)
+all: $(NAME)
 
 $(MLX):
-	@cmake $(MLX_PATH) -B $(MLX_BUILD_PATH)
-	@make -C $(MLX_BUILD_PATH) -j4 --no-print-directory
-	@printf "$(GREEN_BOLD)MLX42 built.$(RESET)\n"
+	@if [ ! -f $(MLX_BUILD_PATH)/$(MLX) ]; then \
+		cmake $(MLX_PATH) -B $(MLX_BUILD_PATH); \
+		make -C $(MLX_BUILD_PATH) -j4 --no-print-directory; \
+		printf "$(GREEN_BOLD)MLX42 built.$(RESET)\n"; \
+	else \
+		printf "$(YELLOW_BOLD)MLX42 already built.$(RESET)\n"; \
+	fi
 
 $(LIBFT):
-	@make -C $(LIBFT_DIR) gnl --no-print-directory
-	@printf "$(GREEN_BOLD)Libft with GNL compiled.$(RESET)\n"
+	@if [ ! -f $(LIBFT_DIR)/$(LIBFT) ]; then \
+		make -C $(LIBFT_DIR) gnl --no-print-directory; \
+		printf "$(GREEN_BOLD)Libft with GNL compiled.$(RESET)\n"; \
+	else \
+		printf "$(YELLOW_BOLD)Libft already compiled.$(RESET)\n"; \
+	fi
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
 	@printf "$(YELLOW)$@: $(RESET)\n"
@@ -72,9 +80,9 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
 	@printf "$(GREEN_BOLD)Object compiled.$(RESET)\n"
 
 $(OBJ_DIR):
-	@mkdir -p $@$(MOVE_DIR)
+	@mkdir -p $@
 
-$(NAME):  $(OBJ)
+$(NAME): $(MLX) $(LIBFT) $(OBJ)
 	@printf "$(GREEN_BOLD) => 100%%$(RESET)\n"
 	@printf "$(YELLOW_BOLD)[fdf]:\t$(RESET)"
 	$(CC) $(CFLAGS) $(OBJ) $(LIB_PATHS) -o $@
