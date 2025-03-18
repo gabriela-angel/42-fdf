@@ -23,7 +23,7 @@ MLX_BUILD_PATH = $(MLX_PATH)/build
 # COMPILATION AND FLAGS
 CC = gcc
 CFLAGS = -g -Wall -Werror -Wextra -Iinclude
-LIB_PATHS = -L$(LIBFT_DIR) -lft -L$(MLX_BUILD_PATH) -lmlx42 -lglfw -ldl -lm -lft -no-pie
+LIB_PATHS = -L$(LIBFT_DIR) -L$(MLX_BUILD_PATH) -lmlx42 -lglfw -ldl -lm -lft -no-pie
 
 # PATHS
 SRC_DIR = src/
@@ -45,10 +45,11 @@ OBJ = $(addprefix $(OBJ_DIR), $(SRC:%.c=%.o))
 
 # ------------------------------ Colors ------------------------------
 
-GREEN_BOLD		=	\033[1;92m
-YELLOW_BOLD		=	\033[1;93m
+GREEN_BOLD	=	\033[1;92m
+YELLOW_BOLD	=	\033[1;93m
 YELLOW		=	\033[0;33m
 RED			=	\033[0;91m
+MAGENTA 	=	\033[1;35m
 CYAN		=	\033[0;96m
 RESET		= \033[0m
 
@@ -73,11 +74,19 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c | $(OBJ_DIR)
 $(OBJ_DIR):
 	@mkdir -p $@$(MOVE_DIR)
 
-$(NAME): $(OBJ)
+$(NAME):  $(OBJ)
 	@printf "$(GREEN_BOLD) => 100%%$(RESET)\n"
 	@printf "$(YELLOW_BOLD)[fdf]:\t$(RESET)"
 	$(CC) $(CFLAGS) $(OBJ) $(LIB_PATHS) -o $@
 	@printf "$(GREEN_BOLD) => Success!$(RESET)\n"
+
+norm:
+	@echo "\n$(CYAN)======= LIBFT =======$(RESET)"
+	@norminette lib/libft | sed 's/OK/\x1b[1;32m&\x1b[0m/g' | sed 's/Error/\x1b[1;31m&\x1b[0m/g'
+	@echo "\n$(YELLOW)======= MANDATORY =======$(RESET)"
+	@norminette src | sed 's/OK/\x1b[1;32m&\x1b[0m/g' | sed 's/Error/\x1b[1;31m&\x1b[0m/g'
+	@echo "\n$(CYAN)======= INCLUDES =======$(RESET)"
+	@norminette include | sed 's/OK/\x1b[1;32m&\x1b[0m/g' | sed 's/Error/\x1b[1;31m&\x1b[0m/g'
 
 leak: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --trace-children=yes --suppressions=suppression_file.supp ./$(NAME) maps/test_maps/42.fdf

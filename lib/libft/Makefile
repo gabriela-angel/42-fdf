@@ -6,7 +6,7 @@
 #    By: gangel-a <gangel-a@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/07 12:04:18 by gangel-a          #+#    #+#              #
-#    Updated: 2025/03/17 19:57:19 by gangel-a         ###   ########.fr        #
+#    Updated: 2025/03/18 15:43:28 by gangel-a         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,26 +87,28 @@ all: $(NAME)
 
 $(NAME): $(OBJ_DIR) $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
-	@printf "library created"
+	@printf "library created\n"
 
 bonus: $(OBJ_DIR) $(BONUS_OBJ)
 	@ar rcs $(NAME) $(BONUS_OBJ)
-	@printf "bonus created"
+	@printf "bonus created\n"
 
 gnl: $(GNL_OBJ_DIR) $(GNL_OBJ) | $(NAME)
-	@ar rcs $(NAME) $(GNL_OBJ)
-	@printf "gnl added"
+	@if ! ar t $(NAME) | grep -q "get_next_line.o"; then \
+		ar rcs $(NAME) $(GNL_OBJ); \
+		printf "gnl added\n"; \
+	fi
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS)$(HEADER) -c $< -o $@
 
 $(OBJ_DIR):
 	@mkdir $@
-	@printf "object directory created"
+	@printf "object directory created\n"
 
 $(GNL_OBJ_DIR):
 	@mkdir -p $@
-	@printf "GNL object directory created"
+	@printf "GNL object directory created\n"
 
 $(GNL_OBJ_DIR)%.o: $(GNL_DIR)%.c
 	@$(CC) $(CFLAGS)$(GNL_HEADER) -c $< -o $@
