@@ -83,6 +83,7 @@ void	init_map(t_fdf *fdf, char *map_path)
 		free(line);
 		fdf->map.height++;
 	}
+	get_next_line(-42);
 	populate_map(&(fdf->map), map);
 	close(fd);
 	return ;
