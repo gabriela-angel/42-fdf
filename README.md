@@ -7,11 +7,11 @@ A 3D wireframe renderer project from 42 School that visualizes 3D terrain maps i
 FdF (Fil de Fer, meaning "wireframe" in French) is a 42 School project that creates a 3D wireframe representation of landscapes. The program reads elevation data from a file and renders it as an isometric projection, connecting points with line segments to create a mesh visualization.
 This project introduces fundamental concepts of:
 
-Computer Graphics: Understanding 3D to 2D projection
-Isometric Projection: Mathematical transformation of coordinates
-Line Drawing Algorithms: Bresenham's line algorithm
-Graphics Library Usage: Working with MiniLibX
-Memory Management: Efficient handling of 2D arrays and structures
+- Computer Graphics: Understanding 3D to 2D projection
+- Isometric Projection: Mathematical transformation of coordinates
+- Line Drawing Algorithms: Bresenham's line algorithm
+- Graphics Library Usage: Working with MiniLibX
+- Memory Management: Efficient handling of 2D arrays and structures
 
 ## Features
 
