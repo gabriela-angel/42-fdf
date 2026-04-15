@@ -1,6 +1,6 @@
 # FDF - 3D Wireframe Renderer
 
-A 3D wireframe (fil de fer) renderer project from 42 School that visualizes 3D terrain maps in isometric projection.
+A 3D wireframe renderer project from 42 School that visualizes 3D terrain maps in isometric projection.
 
 ## Overview
 
